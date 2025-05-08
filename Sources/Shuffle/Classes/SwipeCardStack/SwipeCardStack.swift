@@ -143,12 +143,16 @@ open class SwipeCardStack: UIView, SwipeCardDelegate, UIGestureRecognizerDelegat
   }
 
   func scaleFactor(forCardAtPosition position: Int) -> CGPoint {
-    return position == 0 ? CGPoint(x: 1, y: 1) : CGPoint(x: 0.95, y: 0.95)
+    return position == 0 ? CGPoint(x: 1, y: 1) : CGPoint(x: 0.98, y: 0.98)
   }
 
   func transform(forCardAtPosition position: Int) -> CGAffineTransform {
     let cardScaleFactor = scaleFactor(forCardAtPosition: position)
-    return CGAffineTransform(scaleX: cardScaleFactor.x, y: cardScaleFactor.y)
+    let scaleTransform = CGAffineTransform(scaleX: cardScaleFactor.x, y: cardScaleFactor.y)
+    let translationStackOffset = 15.0
+    let translationTransform = CGAffineTransform(translationX: 0.0, y: translationStackOffset * CGFloat(position))
+
+    return CGAffineTransformConcat(scaleTransform, translationTransform)
   }
 
   override open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
